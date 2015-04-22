@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function proba_schema() {
+  
+  $schema['proba'] = array(
+    'description' => 'Proba tábla.',
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique ID.',
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "Name of contact",
+      ),
+      'phone' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Phone number',
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
