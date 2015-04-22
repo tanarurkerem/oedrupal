@@ -171,3 +171,24 @@ function proba_load($id) {
 function proba_edit($proba) {
   return drupal_get_form('proba_add_form', $proba);
 }
+
+function proba_field_formatter_info() {
+  return array(
+    'palindrome' => array(
+      'label' => t('Palindrome'),
+      'field types' => array('text'),
+    ),
+  );
+}
+
+function proba_field_formatter_view($entity_type, $entity, $field, $instance, 
+           $langcode, $items, $display) {
+  $element = array();
+  foreach ($items as $delta => $item) {
+    $element [$delta] = array('#markup' => check_plain($item ['value']));
+  }
+  return $element;   
+}
+
+
+
