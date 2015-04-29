@@ -1,0 +1,80 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of ProbaTestCase
+ *
+ * @author tanulo
+ */
+class ProbaTestCase extends DrupalWebTestCase {
+   
+  public static function getInfo() {
+    return array(
+      'name' => 'Proba Test',
+      'description' => 'Ez csak egy teszt',
+      'group' => 'Proba',
+    );
+  }
+  
+  public function setUp() {
+    parent::setUp(array('proba'));
+    $this->insertTestData();
+  }
+  
+  public function testProbaPage() {
+    $this->drupalGet('proba');
+    $this->assertText('Próba Pista');
+    $this->assertText('Teszt Ödön');  
+  }
+  
+  public function testProbaAdd() {
+    $edit = array(
+        'name' => 'Example Edit',
+        'phone' => '33-333-333',
+    );
+    $this->drupalPost('proba/add', $edit, t('Add'));
+    $this->drupalGet('proba');
+    $this->assertText('Example Edit');
+  }
+  
+  public function testProbaEdit() {
+    $edit = array(
+        'name' => 'Módosított Pista',
+        'phone' => '44-444-444',
+    );
+    $this->drupalPost('proba/1', $edit, t('Save'));
+    $this->drupalGet('proba');
+    $this->assertText('Módosított Pista');
+    $this->assertNoText('Próba Pista');
+  }
+
+  function insertProba($data) {
+    db_insert('proba')
+    ->fields($data)
+    ->execute();
+  }
+  
+  function baseTestData() {
+    return array(
+      array(
+        'name' => 'Próba Pista',
+        'phone' => '11-111-111',
+      ),
+      array(
+      'name' => 'Teszt Ödön',
+      'phone' => '22-222-222',
+      ),
+    );
+  }
+  
+  function insertTestData() {
+    foreach($this->baseTestData() as $data) {
+      $this->insertProba($data);
+    }
+  }
+}

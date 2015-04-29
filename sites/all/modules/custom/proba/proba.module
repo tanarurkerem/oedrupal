@@ -185,10 +185,17 @@ function proba_field_formatter_view($entity_type, $entity, $field, $instance,
            $langcode, $items, $display) {
   $element = array();
   foreach ($items as $delta => $item) {
-    $element [$delta] = array('#markup' => check_plain($item ['value']));
+    $element [$delta] = array('#markup' => check_plain($item ['value'] . proba_pal($item ['value'])));
   }
   return $element;   
 }
 
+function proba_pal($eredeti) {
+  $forditott = "";
+  for ($i = count($eredeti) + 1; $i>=0; $i--) {
+    $forditott .= $eredeti[$i];
+  }
+  return $forditott;
+} 
 
 
